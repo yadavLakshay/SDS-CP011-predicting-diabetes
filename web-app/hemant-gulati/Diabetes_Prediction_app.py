@@ -5,7 +5,7 @@ import numpy as np
 import joblib
 
 # Load the saved pipeline
-pipeline = joblib.load("../../web-app/hemant-gulati/pipeline.pkl")
+pipeline = joblib.load("pipeline.pkl")
 
 # Title of the app
 st.title("Diabetes Prediction App")
