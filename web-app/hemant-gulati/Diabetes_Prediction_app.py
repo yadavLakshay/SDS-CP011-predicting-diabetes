@@ -4,8 +4,12 @@ import pandas as pd
 import numpy as np
 import joblib
 
+# Define the path to pkl file
+pkl_path = 'hemant_gulati/pipeline.pkl'
+
 # Load the saved pipeline
-pipeline = joblib.load("pipeline.pkl")
+pipeline = joblib.load(pkl_path)
+
 
 # Title of the app
 st.title("Diabetes Prediction App")
