@@ -5,7 +5,7 @@ import numpy as np
 import joblib
 
 # Define the path to your pipeline file
-pipeline_path = 'hemant-gulati/pipeline.pkl'
+pipeline_path = 'web-app/hemant-gulati/pipeline.pkl'
 
 # Load the pipeline
 try:
