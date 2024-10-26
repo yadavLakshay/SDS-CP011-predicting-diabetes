@@ -4,11 +4,16 @@ import pandas as pd
 import numpy as np
 import joblib
 
-# Define the path to pkl file
-pkl_path = 'hemant_gulati/pipeline.pkl'
+# Define the path to your pipeline file
+pipeline_path = 'hemant_deployment/pipeline.pkl'
 
-# Load the saved pipeline
-pipeline = joblib.load(pkl_path)
+# Load the pipeline
+try:
+    with open(pipeline_path, 'rb') as file:
+        pipeline = joblib.load(file)
+    print("Pipeline loaded successfully.")
+except Exception as e:
+    print(f"Error loading pipeline: {e}")
 
 
 # Title of the app
