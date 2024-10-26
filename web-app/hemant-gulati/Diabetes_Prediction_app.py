@@ -9,12 +9,10 @@ pipeline_path = 'web-app/hemant-gulati/pipeline.pkl'
 
 # Load the pipeline
 try:
-    with open(pipeline_path, 'rb') as file:
-        pipeline = joblib.load(file)
+    pipeline = joblib.load('web-app/hemant-gulati/pipeline.pkl')
     print("Pipeline loaded successfully.")
 except Exception as e:
     print(f"Error loading pipeline: {e}")
-
 
 # Title of the app
 st.title("Diabetes Prediction App")
