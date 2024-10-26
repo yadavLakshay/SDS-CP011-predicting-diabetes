@@ -1,7 +1,7 @@
 shap
 matplotlib
-pandas==2.2.3
-scikit-learn==1.2.2
-xgboost==2.1.2
-streamlit==1.39.0
-joblib==1.4.2
+pandas
+scikit-learn
+xgboost
+streamlit
+joblib
