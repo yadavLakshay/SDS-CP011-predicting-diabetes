@@ -1,0 +1,132 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "8ee35668-17cc-4855-b595-e168139f5e66",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "2024-10-25 19:12:31.881 \n",
+      "  \u001b[33m\u001b[1mWarning:\u001b[0m to view this Streamlit app on a browser, run it with the following\n",
+      "  command:\n",
+      "\n",
+      "    streamlit run C:\\Users\\hem11\\anaconda3\\Lib\\site-packages\\ipykernel_launcher.py [ARGUMENTS]\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Import necessary libraries\n",
+    "import streamlit as st\n",
+    "import pandas as pd\n",
+    "import numpy as np\n",
+    "import joblib\n",
+    "\n",
+    "# Load the saved pipeline\n",
+    "pipeline = joblib.load(\"../../web-app/hemant-gulati/pipeline.pkl\")\n",
+    "\n",
+    "# Title of the app\n",
+    "st.title(\"Diabetes Prediction App\")\n",
+    "\n",
+    "# User inputs\n",
+    "st.header(\"Enter Patient's Clinical and Demographic Details to Assess Diabetes Risk and Receive Personalized Recommendations.\")\n",
+    "\n",
+    "hbA1c_level = st.number_input(\"HbA1c Level (e.g., 5.5)\", min_value=0.0, max_value=15.0, value=5.5, step=0.1)\n",
+    "blood_glucose_level = st.number_input(\"Blood Glucose Level (e.g., 100)\", min_value=0, max_value=400, value=100, step=1)\n",
+    "bmi = st.number_input(\"BMI (e.g., 24.5)\", min_value=0.0, max_value=70.0, value=24.5, step=0.1)\n",
+    "age = st.number_input(\"Age (e.g., 45)\", min_value=0, max_value=120, value=45, step=1)\n",
+    "hypertension = st.selectbox(\"Hypertension (0 for No, 1 for Yes)\", options=[0, 1])\n",
+    "smoking_history = st.selectbox(\"Smoking History (0 for No, 1 for Yes)\", options=[0, 1])\n",
+    "heart_disease = st.selectbox(\"Heart Disease (0 for No, 1 for Yes)\", options=[0, 1])\n",
+    "\n",
+    "# Prediction button\n",
+    "if st.button(\"Predict\"):\n",
+    "    # Prepare user data in a dictionary format\n",
+    "    user_data = {\n",
+    "        'hbA1c_level': [hbA1c_level],\n",
+    "        'blood_glucose_level': [blood_glucose_level],\n",
+    "        'bmi': [bmi],\n",
+    "        'age': [age],\n",
+    "        'hypertension': [hypertension],\n",
+    "        'smoking_history': [smoking_history],\n",
+    "        'heart_disease': [heart_disease]\n",
+    "    }\n",
+    "\n",
+    "    # Convert user input to DataFrame\n",
+    "    user_df = pd.DataFrame(user_data)\n",
+    "\n",
+    "    # Automatically generate binned columns\n",
+    "    user_df['binned_blood_glucose_Diabetes'] = (user_df['blood_glucose_level'] > 125).astype(int)\n",
+    "    user_df['binned_hba1c_Severe Diabetes'] = (user_df['hbA1c_level'] > 7.5).astype(int)\n",
+    "    user_df['binned_bmi_Obese'] = (user_df['bmi'] >= 30).astype(int)\n",
+    "\n",
+    "    # Define the required feature columns\n",
+    "    top_features = [\n",
+    "        'hbA1c_level', 'blood_glucose_level', 'bmi', 'age', \n",
+    "        'hypertension', 'smoking_history', 'heart_disease',\n",
+    "        'binned_blood_glucose_Diabetes', 'binned_hba1c_Severe Diabetes', 'binned_bmi_Obese'\n",
+    "    ]\n",
+    "\n",
+    "    # Ensure the DataFrame has all required columns\n",
+    "    user_df_final = user_df[top_features]\n",
+    "\n",
+    "    # Make prediction with the loaded pipeline\n",
+    "    prediction = pipeline.predict(user_df_final)[0]\n",
+    "    prediction_proba = pipeline.predict_proba(user_df_final)[0]\n",
+    "\n",
+    "    # Interpret the prediction\n",
+    "    if prediction == 0:\n",
+    "        prediction_label = \"Non-diabetic\"\n",
+    "    elif prediction == 1:\n",
+    "        prediction_label = \"Pre-diabetic\"\n",
+    "    else:\n",
+    "        prediction_label = \"Diabetic\"\n",
+    "\n",
+    "    # Display the prediction and confidence level\n",
+    "    st.subheader(\"Prediction Results\")\n",
+    "    st.write(f\"**Prediction:** {prediction_label}\")\n",
+    "    st.write(f\"**Confidence Level:** {np.max(prediction_proba) * 100:.2f}%\")\n",
+    "\n",
+    "    # Suggest the next steps based on the prediction\n",
+    "    if prediction_label == \"Non-diabetic\":\n",
+    "        st.write(\"You are likely non-diabetic. Maintain a healthy lifestyle to reduce future risks.\")\n",
+    "    elif prediction_label == \"Pre-diabetic\":\n",
+    "        st.write(\"You are likely pre-diabetic. Consider consulting a healthcare provider for lifestyle advice.\")\n",
+    "    else:\n",
+    "        st.write(\"You are likely diabetic. Seek professional medical guidance for appropriate treatment.\")\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "85c151de-27ad-4eec-945c-8bcd1b4e8302",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.11.7"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
