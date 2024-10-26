@@ -1,8 +1,13 @@
+pip install streamlit shap xgboost joblib numpy
+
 # Import necessary libraries
 import streamlit as st
 import pandas as pd
 import numpy as np
 import joblib
+import xgboost
+import shap
+
 
 # Define the path to your pipeline file
 pipeline_path = 'web-app/hemant-gulati/pipeline.pkl'
