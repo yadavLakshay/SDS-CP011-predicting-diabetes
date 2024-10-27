@@ -13,26 +13,16 @@ print("Files in directory:", os.listdir('.'))
 
 
 # Define the path to your pipeline file
-# pipeline_path = 'web-app/hemant-gulati/pipeline.pkl'
 pipeline_path = "./pipeline.pkl"
 
-with open(pipeline_path, 'rb') as f:
-    pipeline = joblib.load(f)
-
-
-if os.path.exists(pipeline_path):
-    with open(pipeline_path, 'rb') as f:
-        pipeline = joblib.load(f)
-else:
-    print("Pipeline file not found!")
 
 
 # Load the pipeline
-# try:
-#   pipeline = joblib.load('pipeline.pkl')
-#   print("Pipeline loaded successfully.")
-# except Exception as e:
-#  print(f"Error loading pipeline: {e}")
+try:
+   pipeline = joblib.load(pipeline_path)
+   print("Pipeline loaded successfully.")
+except Exception as e:
+  print(f"Error loading pipeline: {e}")
 
 
 # Title of the app
