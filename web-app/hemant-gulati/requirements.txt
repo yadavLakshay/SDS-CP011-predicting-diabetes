@@ -8,3 +8,4 @@ joblib
 numpy
 cython
 setuptools
+category_encoders

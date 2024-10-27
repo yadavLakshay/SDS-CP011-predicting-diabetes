@@ -1,5 +1,3 @@
-pip install streamlit shap xgboost joblib numpy
-
 # Import necessary libraries
 import streamlit as st
 import pandas as pd
@@ -7,7 +5,7 @@ import numpy as np
 import joblib
 import xgboost
 import shap
-
+import category_encoders
 
 # Define the path to your pipeline file
 pipeline_path = 'web-app/hemant-gulati/pipeline.pkl'
@@ -83,8 +81,8 @@ if st.button("Predict"):
 
     # Suggest the next steps based on the prediction
     if prediction_label == "Non-diabetic":
-        st.write("You are likely non-diabetic. Maintain a healthy lifestyle to reduce future risks.")
+        st.write("Patient is likely non-diabetic. Maintain a healthy lifestyle to reduce future risks.")
     elif prediction_label == "Pre-diabetic":
-        st.write("You are likely pre-diabetic. Consider consulting a healthcare provider for lifestyle advice.")
+        st.write("Patient is  likely pre-diabetic. Consider consulting a healthcare provider for lifestyle advice.")
     else:
-        st.write("You are likely diabetic. Seek professional medical guidance for appropriate treatment.")
+        st.write("Patient is likely diabetic. Seek professional medical guidance for appropriate treatment.")
