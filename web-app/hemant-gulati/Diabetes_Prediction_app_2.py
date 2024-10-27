@@ -4,6 +4,34 @@ import pandas as pd
 import numpy as np
 import joblib
 from utils import preprocess_and_predict_with_clinical_thresholds
+import base64
+
+# Set background image
+def set_background():
+    # Load your background image
+    background_image_path = "web-app/hemant-gulati/app_background.jpg"
+    
+    with open(background_image_path, "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read()).decode()
+        
+    # Insert CSS style
+    st.markdown(
+        f"""
+        <style>
+        .stApp {{
+            background-image: url("data:image/jpeg;base64,{encoded_string}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+# Call the function to set the background
+set_background()
 
 # Define the path to your pipeline file
 pipeline_path = "web-app/hemant-gulati/pipeline.pkl"
