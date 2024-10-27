@@ -8,12 +8,12 @@ import shap
 import os
 
 
-print("Working directory:", os.getcwd())
-print("Files in directory:", os.listdir('.'))
+st.write("Working directory:", os.getcwd())
+st.write("Files in directory:", os.listdir('.'))
 
 
 # Define the path to your pipeline file
-pipeline_path = "./pipeline.pkl"
+pipeline_path = "pipeline.pkl"
 
 
 
