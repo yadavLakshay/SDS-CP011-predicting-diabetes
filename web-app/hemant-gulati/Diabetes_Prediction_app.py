@@ -13,7 +13,7 @@ st.write("Files in directory:", os.listdir('.'))
 
 
 # Define the path to your pipeline file
-pipeline_path = "pipeline.pkl"
+pipeline_path = "web-app/hemant-gulati/pipeline.pkl"
 
 
 
