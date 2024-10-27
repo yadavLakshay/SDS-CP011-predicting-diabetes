@@ -5,3 +5,4 @@ xgboost
 streamlit
 joblib
 numpy
+scikit-learn==1.3.0
