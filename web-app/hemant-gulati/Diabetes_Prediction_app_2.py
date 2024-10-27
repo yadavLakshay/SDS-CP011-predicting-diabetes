@@ -6,24 +6,42 @@ import joblib
 from utils import preprocess_and_predict_with_clinical_thresholds
 import base64
 
-# Set background image
+# Import necessary libraries
+import streamlit as st
+import base64
+
+# Set background with overlay
 def set_background():
-    # Load your background image
-    background_image_path = "web-app/hemant-gulati/app_background.jpg"
-    
+    background_image_path = "web-app/hemant-gulati/app_background.jpg"  # Replace with your image path
     with open(background_image_path, "rb") as image_file:
         encoded_string = base64.b64encode(image_file.read()).decode()
-        
-    # Insert CSS style
+
+    # Apply background with a dark overlay
     st.markdown(
         f"""
         <style>
         .stApp {{
-            background-image: url("data:image/jpeg;base64,{encoded_string}");
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("data:image/jpeg;base64,{encoded_string}");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
+        }}
+        .title-box, .header-box {{
+            background-color: rgba(255, 255, 255, 0.8); /* Light semi-transparent background */
+            padding: 10px;
+            border-radius: 8px;
+            width: fit-content;
+            margin: 20px auto; /* Center align */
+        }}
+        .title {{
+            color: #1a3d6d; /* Dark blue */
+            font-size: 2.5em;
+            font-weight: bold;
+        }}
+        .header {{
+            color: #333333; /* Charcoal gray */
+            font-size: 1.75em;
         }}
         </style>
         """,
@@ -33,20 +51,9 @@ def set_background():
 # Call the function to set the background
 set_background()
 
-st.markdown(
-    """
-    <style>
-    .stApp {
-        background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('data:image/jpeg;base64,{encoded_image}');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+# Apply title and header with the styled boxes
+st.markdown("<div class='title-box'><p class='title'>Diabetes Risk & Health Assessment</p></div>", unsafe_allow_html=True)
+st.markdown("<div class='header-box'><p class='header'>Enter Patient's Clinical and Demographic Details to Assess Diabetes Risk and Receive Personalized Recommendations.</p></div>", unsafe_allow_html=True)
 
 
 # Define the path to your pipeline file
