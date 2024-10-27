@@ -39,7 +39,6 @@ pipeline_path = "web-app/hemant-gulati/pipeline.pkl"
 # Load the pipeline
 try:
     pipeline = joblib.load(pipeline_path)
-    st.write("Pipeline loaded successfully.")
 except Exception as e:
     st.write(f"Error loading pipeline: {e}")
 
