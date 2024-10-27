@@ -5,7 +5,6 @@ import numpy as np
 import joblib
 import xgboost
 import shap
-import category_encoders
 
 # Define the path to your pipeline file
 pipeline_path = 'web-app/hemant-gulati/pipeline.pkl'
