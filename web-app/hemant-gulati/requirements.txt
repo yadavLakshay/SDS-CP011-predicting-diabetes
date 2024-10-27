@@ -1,7 +1,6 @@
 shap
 matplotlib
 pandas
-scikit-learn==1.2.2
 xgboost
 streamlit
 joblib
