@@ -1,8 +1,10 @@
 matplotlib
-pandas
 xgboost
-streamlit
 joblib
-numpy
 scikit-learn
 shap
+numpy==2.0
+numba==0.56.0  # Adjust version if needed to align with NumPy compatibility
+scikit-learn==1.2.2
+pandas==1.5.3
+streamlit==1.25.0
