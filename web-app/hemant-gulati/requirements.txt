@@ -3,5 +3,6 @@ pandas
 xgboost
 streamlit
 joblib
+numpy
 scikit-learn
 shap
