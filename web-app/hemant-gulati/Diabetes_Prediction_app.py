@@ -7,11 +7,11 @@ import xgboost
 import shap
 
 # Define the path to your pipeline file
-pipeline_path = 'web-app/hemant-gulati/pipeline.pkl'
+# pipeline_path = 'web-app/hemant-gulati/pipeline.pkl'
 
 # Load the pipeline
 try:
-    pipeline = joblib.load('web-app/hemant-gulati/pipeline.pkl')
+    pipeline = joblib.load('pipeline.pkl')
     print("Pipeline loaded successfully.")
 except Exception as e:
     print(f"Error loading pipeline: {e}")
