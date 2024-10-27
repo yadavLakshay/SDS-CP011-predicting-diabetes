@@ -23,12 +23,12 @@ else:
 
 
 # Load the pipeline
-/* try:
-    pipeline = joblib.load('pipeline.pkl')
-    print("Pipeline loaded successfully.")
-except Exception as e:
-    print(f"Error loading pipeline: {e}")
-*/
+# try:
+#   pipeline = joblib.load('pipeline.pkl')
+#   print("Pipeline loaded successfully.")
+# except Exception as e:
+#  print(f"Error loading pipeline: {e}")
+
 
 # Title of the app
 st.title("Diabetes Prediction App")
