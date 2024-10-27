@@ -7,6 +7,11 @@ import xgboost
 import shap
 import os
 
+
+print("Working directory:", os.getcwd())
+print("Files in directory:", os.listdir('.'))
+
+
 # Define the path to your pipeline file
 # pipeline_path = 'web-app/hemant-gulati/pipeline.pkl'
 pipeline_path = './pipeline.pkl'
