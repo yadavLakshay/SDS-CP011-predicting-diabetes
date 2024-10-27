@@ -6,4 +6,3 @@ xgboost
 streamlit
 joblib
 numpy
-setuptools
