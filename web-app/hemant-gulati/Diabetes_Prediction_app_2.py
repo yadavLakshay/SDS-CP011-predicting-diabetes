@@ -96,7 +96,7 @@ if st.button("Predict"):
     st.subheader("Prediction Results")
     for index, row in results.iterrows():
         st.write(f"**Prediction:** {row['Prediction']}")
-        st.write(f"**Confidence Level:** {row['Probability'] * 100:.2f}%")
+        #st.write(f"**Confidence Level:** {row['Probability'] * 100:.2f}%")
 
     # Suggest the next steps based on the prediction
     if row['Prediction'] == "Non-diabetic":
