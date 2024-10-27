@@ -5,16 +5,30 @@ import numpy as np
 import joblib
 import xgboost
 import shap
+import os
 
 # Define the path to your pipeline file
 # pipeline_path = 'web-app/hemant-gulati/pipeline.pkl'
+pipeline_path = './pipeline.pkl'
+
+with open(pipeline_path, 'rb') as f:
+    pipeline = joblib.load(f)
+
+
+if os.path.exists(pipeline_path):
+    with open(pipeline_path, 'rb') as f:
+        pipeline = joblib.load(f)
+else:
+    print("Pipeline file not found!")
+
 
 # Load the pipeline
-try:
+/* try:
     pipeline = joblib.load('pipeline.pkl')
     print("Pipeline loaded successfully.")
 except Exception as e:
     print(f"Error loading pipeline: {e}")
+*/
 
 # Title of the app
 st.title("Diabetes Prediction App")
