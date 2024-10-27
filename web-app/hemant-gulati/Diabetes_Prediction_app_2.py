@@ -43,7 +43,7 @@ except Exception as e:
     st.write(f"Error loading pipeline: {e}")
 
 # Title of the app
-st.title("Diabetes Prediction App")
+st.title("Diabetes Risk & Health Assessment")
 
 # User inputs
 st.header("Enter Patient's Clinical and Demographic Details to Assess Diabetes Risk and Receive Personalized Recommendations.")
