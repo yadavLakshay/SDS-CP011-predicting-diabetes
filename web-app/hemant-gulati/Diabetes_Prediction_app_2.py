@@ -33,6 +33,22 @@ def set_background():
 # Call the function to set the background
 set_background()
 
+st.markdown(
+    """
+    <style>
+    .stApp {
+        background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('data:image/jpeg;base64,{encoded_image}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+
 # Define the path to your pipeline file
 pipeline_path = "web-app/hemant-gulati/pipeline.pkl"
 
