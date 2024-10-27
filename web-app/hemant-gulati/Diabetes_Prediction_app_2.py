@@ -53,7 +53,7 @@ set_background()
 
 # Apply title and header with the styled boxes
 st.markdown("<div class='title-box'><p class='title'>Diabetes Risk & Health Assessment</p></div>", unsafe_allow_html=True)
-st.markdown("<div class='header-box'><p class='header'>Enter Patient's Clinical and Demographic Details to Assess Diabetes Risk and Receive Personalized Recommendations.</p></div>", unsafe_allow_html=True)
+st.markdown("<div class='header-box'><p class='header'>Enter Patient's Clinical and Demographic details to assess Diabetes risk and receive personalized recommendations.</p></div>", unsafe_allow_html=True)
 
 
 # Define the path to your pipeline file
