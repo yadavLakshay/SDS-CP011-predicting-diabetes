@@ -65,12 +65,6 @@ try:
 except Exception as e:
     st.write(f"Error loading pipeline: {e}")
 
-# Title of the app
-st.title("Diabetes Risk & Health Assessment")
-
-# User inputs
-st.header("Enter Patient's Clinical and Demographic Details to Assess Diabetes Risk and Receive Personalized Recommendations.")
-
 hbA1c_level = st.number_input("HbA1c Level (e.g., 5.5)", min_value=0.0, max_value=15.0, value=5.5, step=0.1)
 blood_glucose_level = st.number_input("Blood Glucose Level (e.g., 100)", min_value=0, max_value=400, value=100, step=1)
 bmi = st.number_input("BMI (e.g., 24.5)", min_value=0.0, max_value=70.0, value=24.5, step=0.1)
