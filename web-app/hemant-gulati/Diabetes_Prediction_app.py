@@ -14,7 +14,7 @@ print("Files in directory:", os.listdir('.'))
 
 # Define the path to your pipeline file
 # pipeline_path = 'web-app/hemant-gulati/pipeline.pkl'
-pipeline_path = 'pipeline.pkl'
+pipeline_path = "./pipeline.pkl"
 
 with open(pipeline_path, 'rb') as f:
     pipeline = joblib.load(f)
