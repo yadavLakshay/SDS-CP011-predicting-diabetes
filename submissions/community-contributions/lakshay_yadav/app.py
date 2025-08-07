@@ -9,7 +9,7 @@ import plotly.graph_objects as go
 # -----------------------------
 # ✅ Styling and Page Config
 # -----------------------------
-st.set_page_config(page_title="🩺 Diabetes Risk Predictor", layout="wide")
+st.set_page_config(page_title="🪸 Diabetes Risk Predictor", layout="wide")
 
 st.markdown("""
     <style>
@@ -42,21 +42,24 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-st.title("🩺 Diabetes Risk Predictor")
+st.title("🪸 Diabetes Risk Predictor")
 st.markdown("Enter the patient information below to predict the likelihood of diabetes.")
 
 # -----------------------------
 # ✅ Load model and metadata
 # -----------------------------
-base_path = r"C:\\Users\\ABCD\\_ML projects(SDS)\\_CP11-diabetes\\SDS-CP011-predicting-diabetes\\submissions\\community-contributions\\lakshay_yadav\\lakshay_data"
+base_path = os.path.join(os.path.dirname(__file__), "lakshay_data")
 model = joblib.load(os.path.join(base_path, "best_model_gradient_boosting.pkl"))
 scaler = joblib.load(os.path.join(base_path, "fitted_scaler.pkl"))
-feature_metadata = joblib.load(open(os.path.join(base_path, "feature_metadata.pkl"), "rb"))
+encoder = joblib.load(os.path.join(base_path, "fitted_encoder.pkl"))
+with open(os.path.join(base_path, "feature_metadata.pkl"), "rb") as f:
+    feature_metadata = joblib.load(f)
+
 numeric_features = feature_metadata['numeric_features']
 all_features = feature_metadata['feature_names']
 
 # -----------------------------
-# 📥 Input Form
+# 📅 Input Form
 # -----------------------------
 with st.form("prediction_form"):
     st.subheader("📋 Clinical & Demographic Inputs")
@@ -84,6 +87,7 @@ with st.form("prediction_form"):
 # 🔮 Prediction Logic
 # -----------------------------
 if submit:
+    # 1️⃣ Prepare raw input dictionary
     input_dict = {
         'age': age,
         'bmi': bmi,
@@ -98,21 +102,38 @@ if submit:
         **{f"race:{r}": 1 if r == race else 0 for r in ['Hispanic', 'Asian', 'AfricanAmerican', 'Caucasian', 'Other']}
     }
 
-    df = pd.DataFrame([input_dict])
+    # 2️⃣ Create DataFrame from input
+    df_input = pd.DataFrame([input_dict])
+
+    # 3️⃣ Add 'diabetes' column if encoder requires it
+    if 'diabetes' not in df_input.columns and 'diabetes' in encoder.feature_names_in_:
+        df_input['diabetes'] = 0
+
+    # 4️⃣ Encode features
+    try:
+        encoded = encoder.transform(df_input)
+    except ValueError as e:
+        st.error(f"Encoding error: {e}")
+        st.stop()
+
+    # 5️⃣ Align encoded output with expected model features
+    encoded_columns = encoder.get_feature_names_out()
+    encoded_df = pd.DataFrame(encoded, columns=encoded_columns)
+
+    # Add missing columns if needed
     for col in all_features:
-        if col not in df.columns:
-            df[col] = 0
-    df = df[all_features]  # ensure proper column order
+        if col not in encoded_df.columns:
+            encoded_df[col] = 0
 
-    scaled = scaler.transform(df[numeric_features])
-    encoded = df.drop(columns=numeric_features).values
-    final_input = np.hstack([scaled, encoded])
-    final_df = pd.DataFrame(final_input, columns=all_features)
+    # Reorder to match model training feature order
+    final_df = encoded_df[all_features]
 
+
+    # ✅ Predict
     prediction = model.predict(final_df)[0]
     probability = model.predict_proba(final_df)[0][1]
 
-    # 📊 Animated Gauge Chart
+    # === Step 6: Display Results
     fig = go.Figure(go.Indicator(
         mode="gauge+number",
         value=probability * 100,
@@ -129,12 +150,10 @@ if submit:
     ))
     st.plotly_chart(fig, use_container_width=True)
 
-    # 🧾 Result Summary
     result_text = "Diabetes" if prediction == 1 else "No Diabetes"
     st.success(f"**Prediction:** {result_text}")
     st.info(f"**Probability:** {probability:.2%}")
 
-    # ⚖️ Comparison vs Healthy Thresholds
     st.markdown("### 📊 Comparison vs Healthy Guidelines")
     healthy_ranges = {
         "BMI": "18.5–24.9",
@@ -148,7 +167,7 @@ if submit:
     }))
 
 # -----------------------------
-# 📈 Feature Importance with Plotly
+# 📈 Feature Importance
 # -----------------------------
 st.markdown("### 📈 Feature Importance (Top 5 Features)")
 
